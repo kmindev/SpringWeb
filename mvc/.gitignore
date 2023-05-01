@@ -1,0 +1,7 @@
+.gradle/
+.idea/.gitignore
+.idea/
+out/
+webapps/WEB-INF/classes/
+tomcat.8080/work/Tomcat/localhost/ROOT/org/apache/jsp/home_jsp.java
+tomcat.8080/

@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // servlet
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
+
+    // reflection
+    implementation 'org.reflections:reflections:0.10.2'
+
+    // test 코드
+    implementation 'org.assertj:assertj-core:3.23.1'
+
+    // logo
+    implementation 'ch.qos.logback:logback-classic:1.2.3'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}
