@@ -26,7 +26,7 @@ class MemberServiceTest {
 
     @AfterEach
     public void afterEach() {
-        memberRepository.clearStore();
+//        memberRepository.clearStore();
     }
 
     @DisplayName("회원가입 테스트")
