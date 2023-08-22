@@ -18,3 +18,4 @@
   - 회원은 일반과 VIP 두 가지 등급이 있다.
   - 회원 데이터는 자체 DB를 구축할 수 있고, 외부 시스템과 연동할 수 있다.(미확정)
 
+![img](https://github.com/kmindev/SpringWeb/assets/97210232/3688a7ba-5a9f-481a-9157-c9157db3300c)
