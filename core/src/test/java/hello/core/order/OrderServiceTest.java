@@ -20,12 +20,22 @@ public class OrderServiceTest {
     }
 
     @Test
-    void createOrder() {
+    void createOrder1() {
         Long memberId = 1L;
         Member member = new Member(memberId, "memberA", Grade.VIP);
         memberService.join(member);
 
         Order order = orderService.createOrder(memberId, "itemA", 10000);
         Assertions.assertThat(order.getDiscountPrice()).isEqualTo(1000);
+    }
+
+    @Test
+    void createOrder2() {
+        Long memberId = 1L;
+        Member member = new Member(memberId, "memberA", Grade.VIP);
+        memberService.join(member);
+
+        Order order = orderService.createOrder(memberId, "itemA", 20000);
+        Assertions.assertThat(order.getDiscountPrice()).isEqualTo(2000);
     }
 }
