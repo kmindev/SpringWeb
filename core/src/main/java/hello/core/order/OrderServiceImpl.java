@@ -10,10 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderServiceImpl implements OrderService {
     private final MemberRepository memberRepository;
-
-    //    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
-    // 할인 정책을 변경하려면 OrderServiceImpl 클라이언트 코드도 고쳐야 한다. => OCP,DIP 위반
-    private DiscountPolicy discountPolicy;
+    private final DiscountPolicy discountPolicy;
 
     @Autowired
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
