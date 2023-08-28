@@ -1,5 +1,7 @@
 package hello.core.lifecycle;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -29,6 +31,7 @@ public class NetworkClient {
     }
 
     // 의존 관계 주입이 끝나면 호출
+    @PostConstruct
     public void init() throws Exception {
         System.out.println("NetworkClient.afterPropertiesSet");
         connect();
@@ -36,6 +39,7 @@ public class NetworkClient {
     }
 
     // 종료될 때 호출
+    @PreDestroy
     public void close() throws Exception {
         System.out.println("NetworkClient.destroy");
         disconnect();
