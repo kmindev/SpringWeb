@@ -1,11 +1,19 @@
 package com.cos.security1.controller;
 
+import com.cos.security1.model.User;
+import com.cos.security1.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller // view를 리턴한다.
+@RequiredArgsConstructor
 public class IndexController {
+
+    private final UserService userService;
 
     @GetMapping({"", "/"})
     public String index() {
@@ -30,14 +38,21 @@ public class IndexController {
     }
 
     // 스프링 시큐리티가 중간에 낚아채감. - SecurityConfig 설정 후 고침
-    @GetMapping("/login")
-    public @ResponseBody String login() {
-        return "login";
+    @GetMapping("/loginForm")
+    public String login() {
+        return "loginForm";
     }
 
-    @GetMapping("/join")
-    public @ResponseBody String join() {
+    @PostMapping("/join")
+    public @ResponseBody String join(User user) {
+        System.out.println("user = " + user);
+        userService.join(user);
         return "join";
+    }
+
+    @GetMapping("/joinForm")
+    public String joinForm() {
+        return "joinForm";
     }
 
     @GetMapping("/joinProc")
