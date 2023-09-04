@@ -7,18 +7,41 @@ package com.cos.security1.auth;
 // User 오브젝트 타입 => UserDetails 타입 객체
 
 import com.cos.security1.model.User;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 // Security Session => Authentication => UserDetails(PrincipalDetails)
-public class PrincipalDetails implements UserDetails {
+// 일반로그인일 경우 UserDetails 타입으로 찾고, OAuth2 로그인일 경우 OAuth2User 타입을 찾는다. => 둘 다 부모로 두고 PrincipalDetails 처리하기 편하게 하자.
+@Data
+public class PrincipalDetails implements UserDetails, OAuth2User {
     private User user;
+    private Map<String, Object> attributes;
 
+    // 일반 로그인
     public PrincipalDetails(User user) {
         this.user = user;
+    }
+
+    // OAuth 로그인
+    public PrincipalDetails(User user, Map<String, Object> attributes) {
+        this.user = user;
+        this.attributes = attributes;
+    }
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+
+    @Override
+    public String getName() {
+        return null;
     }
 
     // 해당 User의 권한을 리턴
