@@ -13,4 +13,4 @@
 - [https://developers.naver.com/docs/login/devguide/devguide.md#2-2-1-%EC%86%8C%EC%85%9C-%EB%A1%9C%EA%B7%B8%EC%9D%B8](https://developers.facebook.com/)
 - [https://console.cloud.google.com/](https://console.cloud.google.com/welcome?project=master-haven-398010)
 - [https://developers.naver.com/products/login/api/api.md](https://developers.naver.com/products/login/api/api.md)
-- [https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81%EB%B6%80%ED%8A%B8-%EC%8B%9C%ED%81%90%EB%A6%AC%ED%8B%B0/dashboard](https://inf.run/E8Kt)https://inf.run/E8Kt
+- https://inf.run/E8Kt
