@@ -21,7 +21,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     // 구글 로그인 후 실행되는 메서드
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        System.out.println("userRequest = " + userRequest.getClientRegistration()); // registationId로 어떤 OAuth로 로그인 했는지
+        System.out.println("userRequest = " + userRequest.getClientRegistration().getRegistrationId()); // registationId로 어떤 OAuth로 로그인 했는지
         System.out.println("userRequest.getAccessToken() = " + userRequest.getAccessToken().getTokenValue());
 
         OAuth2User oAuth2User = super.loadUser(userRequest);
@@ -30,12 +30,11 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         System.out.println("getAttributes() = " + oAuth2User.getAttributes());
 
         // 회원가입 진행
-        String provider = userRequest.getClientRegistration().getClientId(); // google
+        String provider = userRequest.getClientRegistration().getRegistrationId(); // google
         String providerId = oAuth2User.getAttribute("sub");
         String email = oAuth2User.getAttribute("email");
         String username = provider + "_" + providerId;
         String password = bCryptPasswordEncoder.encode("password");
-//        String password = "1234";
         String role = "ROLE_USER";
 
         User userEntity = userRepository.findByUsername(username);
@@ -49,6 +48,8 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                     .provider(provider)
                     .providerId(providerId)
                     .build();
+
+            userRepository.save(userEntity);
         }
 
         return new PrincipalDetails(userEntity, oAuth2User.getAttributes());
