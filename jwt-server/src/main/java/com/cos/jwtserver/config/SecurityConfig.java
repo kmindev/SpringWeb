@@ -13,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.filter.CorsFilter;
 
 
 @Configuration
@@ -20,7 +21,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
-
+    private final CorsFilter corsFilter;
     /**
      * /user: 인증받아야 접근 가능
      * /manger: admin, manger 권한이 있어야 접근 가능
@@ -33,7 +34,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 사용 x
-                .cors(cors -> cors.disable()) // 시큐리티 필터에 등록 인증
+                .addFilter(corsFilter)
                 .addFilterBefore(new MyFilter3(), BasicAuthenticationFilter.class) // BasicAuthenticationFilter 실행되기 이전에 MyFilter3이 실행
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
