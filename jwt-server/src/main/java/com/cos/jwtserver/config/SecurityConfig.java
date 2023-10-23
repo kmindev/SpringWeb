@@ -1,15 +1,20 @@
 package com.cos.jwtserver.config;
 
-import com.cos.jwtserver.filter.MyFilter1;
+import com.cos.jwtserver.jwt.JwtAuthenticationFilter;
 import com.cos.jwtserver.filter.MyFilter3;
+import com.cos.jwtserver.jwt.JwtAuthorizationFilter;
+import com.cos.jwtserver.ropository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -21,21 +26,28 @@ import org.springframework.web.filter.CorsFilter;
 @EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final CorsFilter corsFilter;
+    private final CorsConfig corsConfig;
+    private final UserRepository userRepository;
     /**
      * /user: 인증받아야 접근 가능
      * /manger: admin, manger 권한이 있어야 접근 가능
      * /admin: admin 권한이 있어야 접근 가능
      */
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
-
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 사용 x
-                .addFilter(corsFilter)
-                .addFilterBefore(new MyFilter3(), BasicAuthenticationFilter.class) // BasicAuthenticationFilter 실행되기 이전에 MyFilter3이 실행
+                .addFilter(corsConfig.corsFilter())
+                .addFilter(new JwtAuthenticationFilter(http.getSharedObject(AuthenticationManager.class)))
+                .addFilter(new JwtAuthorizationFilter(http.getSharedObject(AuthenticationManager.class), userRepository))
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
@@ -47,4 +59,16 @@ public class SecurityConfig {
 
         return http.build();
     }
+
+//    public class MyCustomDsl extends AbstractHttpConfigurer<MyCustomDsl, HttpSecurity> {
+//        @Override
+//        public void configure(HttpSecurity http) throws Exception {
+//            AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
+//            http
+//                    .addFilter(corsConfig.corsFilter())
+//                    .addFilter(new JwtAuthenticationFilter(authenticationManager))
+//                    .addFilter(new JwtAuthorizationFilter(authenticationManager, userRepository))
+//                    .build();
+//        }
+//    }
 }

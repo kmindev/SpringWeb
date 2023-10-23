@@ -11,19 +11,19 @@ public class FilterConfig {
 
     // 시큐리티 필터가 다 끝난 후 실행
 
-    @Bean
-    public FilterRegistrationBean<MyFilter1> filter1() {
-        FilterRegistrationBean<MyFilter1> bean = new FilterRegistrationBean<>(new MyFilter1());
-        bean.addUrlPatterns("/*");
-        bean.setOrder(0); // 낮은 번호가 필터중에 가장 먼저 실행됨.
-        return bean;
-    }
-
-    @Bean
-    public FilterRegistrationBean<MyFilter2> filter2() {
-        FilterRegistrationBean<MyFilter2> bean = new FilterRegistrationBean<>(new MyFilter2());
-        bean.addUrlPatterns("/*");
-        bean.setOrder(1); // 낮은 번호가 필터중에 가장 먼저 실행됨.
-        return bean;
-    }
+//    @Bean
+//    public FilterRegistrationBean<MyFilter1> filter1() {
+//        FilterRegistrationBean<MyFilter1> bean = new FilterRegistrationBean<>(new MyFilter1());
+//        bean.addUrlPatterns("/*");
+//        bean.setOrder(0); // 낮은 번호가 필터중에 가장 먼저 실행됨.
+//        return bean;
+//    }
+//
+//    @Bean
+//    public FilterRegistrationBean<MyFilter2> filter2() {
+//        FilterRegistrationBean<MyFilter2> bean = new FilterRegistrationBean<>(new MyFilter2());
+//        bean.addUrlPatterns("/*");
+//        bean.setOrder(1); // 낮은 번호가 필터중에 가장 먼저 실행됨.
+//        return bean;
+//    }
 }

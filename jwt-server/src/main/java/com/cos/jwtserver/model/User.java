@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@Entity
+@Entity(name = "user_tbl")
 @Data
 public class User {
     @Id

@@ -1,5 +1,6 @@
 package com.cos.jwtserver.filter;
 
+import com.cos.jwtserver.jwt.JwtProperties;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,11 +19,11 @@ public class MyFilter3 implements Filter {
 
         if (req.getMethod().equals("POST")) {
             System.out.println("POST 요청옴");
-            String headerAuth = req.getHeader("Authorization");
+            String headerAuth = req.getHeader(JwtProperties.HEADER_STRING);
             System.out.println(headerAuth);
             System.out.println("필터3");
 
-            if (headerAuth.equals("cos")) { // 토큰이 코스이면 인증
+            if (headerAuth.equals(JwtProperties.SECRET)) { // 토큰이 코스이면 인증
                 chain.doFilter(req, res);
             } else {
                 PrintWriter outPrintWriter = res.getWriter();
