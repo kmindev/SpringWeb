@@ -12,3 +12,7 @@
 * 상품 상세
 * 상품 등록
 * 상품 수정
+
+### 서비스 제공 흐름
+![image](https://github.com/kmindev/SpringWeb/assets/97210232/bcb9e209-d9cd-42d8-b30b-7fe81ab11a3e)
+
