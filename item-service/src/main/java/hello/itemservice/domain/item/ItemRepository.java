@@ -1,5 +1,6 @@
 package hello.itemservice.domain.item;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -35,5 +36,11 @@ public class ItemRepository {
 
     public void clearStore() {
         store.clear();
+    }
+
+    @PostConstruct
+    public void init() {
+        save(new Item("itemA", 10000, 10));
+        save(new Item("itemB", 20000, 20));
     }
 }
